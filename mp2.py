@@ -60,19 +60,25 @@ class Rush_Hour_Search:
   
     
     def print(self):
-        dict_games, dict_fuel = Rush_Hour_Search.read_file(self)
+        dict_games, tot_fuel = Rush_Hour_Search.read_file(self)
+        count = 0
         if self.select_game == 'all':
             for index, game in dict_games.items():
                 print('Game number: {}'.format(index))
                 for row in range(0, 6):
                     print(game[6 * row: 6 * (row + 1)])
-                print('fuel: {}'.format(dict_fuel[index]))
+                print('fuel: {}'.format(tot_fuel[count]))
+                count += 1
                 print("\n --------------------- \n")
         else:
             print('Game number: {}'.format(int(self.select_game)))
-            for row in range(0, 6):
-                print(list(dict_games.values())[6 * row: 6 * (row + 1)])
-            print('fuel: {}'.format(dict_fuel))
+            for index, game in dict_games.items():
+                print('Game number: {}'.format(index))
+                for row in range(0, 6):
+                    print(game[6 * row: 6 * (row + 1)])
+                print('fuel: {}'.format(tot_fuel[count]))
+                count += 1
+                print("\n --------------------- \n")
    
     '''
     def UCS(self):
@@ -85,5 +91,6 @@ class Rush_Hour_Search:
     def A_star(self):
     '''
         
-r = Rush_Hour_Search(select_game = 'all')
+r = Rush_Hour_Search(select_game = '2')
 dict_games, dict_fuel = r.read_file()
+r.print()
