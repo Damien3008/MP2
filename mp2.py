@@ -40,7 +40,6 @@ class Rush_Hour_Search:
                 for i in game: 
                     if i not in cars and i != '.' and i != ' ' and not i.isdigit():
                         cars.append(i)
-                #print(len(game.split(' ')))
                 
                 if len(game.split(' ')) != 1:
                     for j in range(1, len(game.split(' '))):
@@ -75,6 +74,23 @@ class Rush_Hour_Search:
         for i in range(0,6):
             board.append(input_arrayed[0+6*i:6+6*i])
         return board
+    
+    def game_to_numbers(self, input):
+        board = Rush_Hour_Search.extract_game(self, input)
+        letters = ['.']
+        for i in board:
+            for j in i:
+                if j not in letters:
+                    letters.append(j)
+            
+        LtoN = {l:n for l,n in zip(letters, [i for i in range(0,len(letters))])}
+        puzzle = np.zeros((6,6))
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                puzzle[i,j] = LtoN[board[i][j]]
+       
+        
+        return puzzle, LtoN
 
     def print(self):
         dict_games, tot_fuel = Rush_Hour_Search.read_file(self)
@@ -90,7 +106,6 @@ class Rush_Hour_Search:
         else:
             print('Game number: {}'.format(int(self.select_game)))
             for index, game in dict_games.items():
-                print('Game number: {}'.format(index))
                 for row in range(0, 6):
                     print(game[6 * row: 6 * (row + 1)])
                 print('fuel: {}'.format(tot_fuel[count]))
@@ -126,13 +141,17 @@ class Rush_Hour_Search:
    
     '''
     def UCS(self):
-    
     def gbfs(self):
-    def A_star(self):
     '''
+    
+    def A_star(self, input):
+        global puzzle
+        puzzle, LtoN = Rush_Hour_Search.game_to_numbers(self, input)
+        fuel = Rush_Hour_Search.read_file(self)[-1]
         
-r = Rush_Hour_Search(select_game = '2')
+r = Rush_Hour_Search(select_game = 'all')
 dict_games, dict_fuel = r.read_file()
-state = r.extract_game(dict_games["Game2"])
-r.print()
-print("score: " + str(r.h1(state)))
+#state = r.game_to_numbers(dict_games["Game2"])
+#r.print()
+r.A_star(dict_games["Game2"])
+#print("score: " + str(r.h1(state)))
