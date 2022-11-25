@@ -1,5 +1,0 @@
-# this is an input file
-AAABCDFEEBCDF.RRC.GGH....IH.KK.IJJLL
-AAB...C.BHHHC.RRDF....DFEEGGG.......
-AAB...C.BHHHC.RRDF....DFEEGGG....... D0
-#AAB...C.BHHHC.RRDD......EEGGGF.....F C3 B4 H1
