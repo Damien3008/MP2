@@ -1,0 +1,23 @@
+Initial Board Configuration: .CNN...CJJHHKMBAA.KMBLLIGFFEEIGDDOOI
+
+ . C N N . . 
+ . C J J H H 
+ K M B A A . 
+ K M B L L I 
+ G F F E E I 
+ G D D O O I 
+
+Car fuel available: F: 100 D: 100 N: 100 J: 100 A: 100 L: 100 E: 100 O: 100 H: 100 K: 100 G: 100 C: 100 M: 100 B: 100 I: 100 
+Runtime: 0.000891 seconds
+Search path length: 0 states
+Solution path length: 1 moves
+Solution path: A right; 
+
+A right		99	.CNN...CJJHHKMBAA.KMBLLIGFFEEIGDDOOI
+
+ . C N N . . 
+ . C J J H H 
+ K M . A A . 
+ K M B L L I 
+ G F F E E I 
+ G D D O O I 
