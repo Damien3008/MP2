@@ -1,0 +1,15 @@
+# easy, solution in 4 moves
+...CC.DD.K.LIAAK.LI.JEEMFFJ..M.GGG..
+
+# medium, solution in 14 moves
+BBICCLG.IJKLGAAJKMGHDDDM.H.....FF...
+
+# hard, solution in 30 moves
+BBCCK...I.KL..IAALEEIJ.LH..JFFHGGG..
+
+# extreme, Error: no solution found after 0.08 seconds
+BBB..K..H..K..HAAKCCIJDDG.IJEEGFFF.. B0 C3
+
+# extreme, solution in 39 moves
+.BBBCC..JDDLAAJ.KLIEE.KMIFF..MGGHHHM
+
