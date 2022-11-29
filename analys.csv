@@ -1,4 +1,0 @@
-,length of the solution (for gbfs and A* heuristic = 1),length of the path (for gbfs and A* heuristic = 1),Execution time (seconds) (for gbfs and A* heuristic = 1),length of the solution (for gbfs and A* heuristic = 2),length of the path (for gbfs and A* heuristic = 2),Execution time (seconds) (for gbfs and A* heuristic = 2),length of the solution (for gbfs and A* heuristic = 3),length of the path (for gbfs and A* heuristic = 3),Execution time (seconds) (for gbfs and A* heuristic = 3),length of the solution (for gbfs and A* heuristic = 4),length of the path (for gbfs and A* heuristic = 4),Execution time (seconds) (for gbfs and A* heuristic = 4)
-ucs,257.0,4.9286,5.2284,,,,,,,,,
-gbfs,108.1,8.3,0.0551,108.1,8.3,0.0558,108.1,8.3,0.0537,164.1667,7.9667,0.1074
-A*,301.8,5.0,8.3371,301.8,5.0,8.4813,145.6333,5.2,0.919,242.9333,4.1333,3.0128
