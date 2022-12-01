@@ -88,13 +88,41 @@ class GameEngine:
 
 
     def print_results(self, method, game, start, end, finishing_state, state_counter, ambulance, heuristic, index_a, solution, cars):
+        """ given the final parameters after running the algorith, this method computes the necessary information and writes it to a file 
+        Parameters
+        ----------
+        method : str
+            the name of the used algorithm
+        game : int
+            the number of the game
+        start : datetime
+            timestamp at start of algorithm
+        end : datetime
+            timestamp at end of algorithm
+        finishing_state : State
+            State object of final state
+        state_counter : int
+            count of search path length
+        ambulance : Car
+            Car object corresponding to the ambulance
+        heuristic : int
+            number of used heuristic
+        index_a : int
+            index position of ambulance in horizontal_cars
+        solution : boolean
+            Boolean if solution has been found
+        cars : List
+            List of all cars
+        """
+        """
+        # Initialize the file, depending on the algorithm used
         if method == "ucs":
             file_sol = open(method + '-' + 'sol' + '-' + 'game' + game.split(" ")[1] + '.txt', 'w')
             file_search = open(method + '-' + 'search' + '-' + 'game' + game.split(" ")[1] + '.txt', 'w')
         else:
             file_sol = open(method + '-' + 'sol' + '-h' + str(heuristic[1]) + '-' + 'game' + game.split(" ")[1] + '.txt', 'w')
             file_search = open(method + '-' + 'search' + '-h' + str(heuristic[1]) + '-' + 'game' +  game.split(" ")[1] + '.txt', 'w')
-
+        # Extract Fuel Levels
         fuel_levels = ""
         for car in cars:
             fuel_levels = fuel_levels + car.name + ": " + str(car.fuel) + " "
@@ -112,7 +140,7 @@ class GameEngine:
         solution_search = ""
         solution_path = ""
         solution_counter = 0
-
+        # Create a solution string, by iteratively looking at the last move done by the algorithm and then calling the previous state.
         while current.parent is not None:
             solution_counter += 1
             if current.last_move[0].orientation == "H":
@@ -138,6 +166,7 @@ class GameEngine:
 
             current = current.parent
         move_a = 5 - ambulance.y - finishing_state.offset[index_a] - ambulance.length + 1
+        # Check if the ambulance has reached its goal yet. If not, move it to the goal and update the values
         if move_a > 0:
             solution_counter += 1
             finishing_state.offset[index_a] += move_a
@@ -276,6 +305,20 @@ class GameEngine:
 
 
 class State:
+
+    '''
+    This class contains the necessary logic to keep track of every search node aka State. 
+    inputs:
+        state : a 6x6 list, containing the current positions of all cars
+        parent : State that refers to the previously visited State
+        offset : List keeping track of the movements of each car
+        fuel_offset : List keeping track of the used fuel for each car
+        heuristic : Tupel containg information if a heuristic is used, the heuristic number and lambda
+        g : int 0 or 1, whether or not the amount of past moves should be taken into account
+        last_move : Tupel containing the information about the last moved car, the number of steps and the remaining fuel
+        
+    '''
+
     def __init__(self, state, parent, offset, fuel_offset, heuristic=(1,4,1), g = 0, last_move=("Z", 0, 0)):
         self.last_move = last_move
         self.parent = parent
@@ -317,6 +360,8 @@ class State:
         copy_object = State()
         copy_object.value = self.value
         return copy_object
+        
+    # We define the comparison methods so that the heap has a basis to compare the different states
     
     def __eq__(self, other):
         return self.score == other.score
@@ -341,6 +386,16 @@ class State:
 
 class Car():
 
+    '''
+    This class is used to save all the information regarding the different car this includes:
+    inputs:
+        name : str which contains the letter as shown in the initial game board
+        orientation : H or V whether the car is horizontal or vertical
+        length : int, length of the car
+        x : initial y location of the car (origin top left), with postive y going down
+        y : initial x location of the car (origin top left)
+    '''
+
     def __init__(self, name, orientation, length, x, y, fuel=100):
         if not isinstance(name, str):
             raise ValueError("The name needs to be a string.")
@@ -364,6 +419,25 @@ class Car():
 # -------------- Implementation of the move methods --------------
 
 def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
+"""
+    Parameters
+    ----------
+    state : State
+        state of the current puzzle.
+    car : Car
+        the car to be moved
+    heuristic : int32, optional
+        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
+    num_steps : int32, optional
+        number of steps the car should be moved
+    g : 0 or 1, optional
+        whether or not to use the current number of moves in the score
+
+    Returns
+    -------
+    State
+        State created by moving
+    """
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -377,6 +451,25 @@ def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
+"""
+    Parameters
+    ----------
+    state : State
+        state of the current puzzle.
+    car : Car
+        the car to be moved
+    heuristic : int32, optional
+        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
+    num_steps : int32, optional
+        number of steps the car should be moved
+    g : 0 or 1, optional
+        whether or not to use the current number of moves in the score
+
+    Returns
+    -------
+    State
+        State created by moving
+    """
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -391,6 +484,25 @@ def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
+"""
+    Parameters
+    ----------
+    state : State
+        state of the current puzzle.
+    car : Car
+        the car to be moved
+    heuristic : int32, optional
+        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
+    num_steps : int32, optional
+        number of steps the car should be moved
+    g : 0 or 1, optional
+        whether or not to use the current number of moves in the score
+
+    Returns
+    -------
+    State
+        State created by moving
+    """
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -404,6 +516,25 @@ def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_up(current_state, car, heuristic, i, num_steps=1, g=0):
+"""
+    Parameters
+    ----------
+    state : State
+        state of the current puzzle.
+    car : Car
+        the car to be moved
+    heuristic : int32, optional
+        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
+    num_steps : int32, optional
+        number of steps the car should be moved
+    g : 0 or 1, optional
+        whether or not to use the current number of moves in the score
+
+    Returns
+    -------
+    State
+        State created by moving
+    """
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
