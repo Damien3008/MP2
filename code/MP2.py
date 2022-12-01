@@ -88,6 +88,7 @@ class GameEngine:
 
 
     def print_results(self, method, game, start, end, finishing_state, state_counter, ambulance, heuristic, index_a, solution, cars):
+        
         """ given the final parameters after running the algorith, this method computes the necessary information and writes it to a file 
         Parameters
         ----------
@@ -114,7 +115,7 @@ class GameEngine:
         cars : List
             List of all cars
         """
-        """
+        
         # Initialize the file, depending on the algorithm used
         if method == "ucs":
             file_sol = open(method + '-' + 'sol' + '-' + 'game' + game.split(" ")[1] + '.txt', 'w')
