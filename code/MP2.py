@@ -5,11 +5,36 @@ import copy
 from time  import time
 
 class GameEngine:
+    
+    '''
+    This class contains the methods for extracting features such as puzzles, fuels ext.
+    We implement also some preprocessing step in order to make the search algorithms easier
+    to build.
+    inputs:
+        input_file: the path of your file that contains puzzles
+        select_game: (default 'all') if you want to run one game in particular.
+    '''
+    
     def __init__(self, input_file = 'input.txt', select_game = 'all'):
         self.input_file = input_file
         self.select_game = select_game
         
     def read_file(self):
+        
+        """
+        Method for reading a file and extract the puzzle and the fuel for each game.
+        Raises
+        ------
+        ValueError
+            If the game is not correct (contains not enough cars, or spaces).
+        Returns
+        -------
+        dict_games (dictionnary)
+            Dictionnary that contains all the puzzles of the input_file.
+        dict_fuel (dictionnary)
+            Dictionnary that contains all the fuel of the puzzles.
+        """
+        
         dict_games = dict()
         tot_fuel = list()
         index = 1
@@ -85,19 +110,19 @@ class GameEngine:
         while current.parent is not None:
             solution_counter += 1
             if current.last_move[0].orientation == "H":
-                if current.last_move[1] == -1:
-                    solution_path = current.last_move[0].name + " left; " + solution_path
-                    solution = current.last_move[0].name + " left\t\t" + str(current.last_move[2]) + "\t" + str(current) + "\n" + solution
+                if current.last_move[1] <= -1:
+                    solution_path = current.last_move[0].name + " " + str(-1 * current.last_move[1]) + " left; " + solution_path
+                    solution = current.last_move[0].name + " " + str(-1 * current.last_move[1]) + " left\t\t" + str(current.last_move[2]) + "\t" + str(current) + "\n" + solution
                 else:
-                    solution_path = current.last_move[0].name + " right; " + solution_path
-                    solution = current.last_move[0].name + " right\t\t" + str(current.last_move[2]) + "\t"+ str(current) + "\n" + solution
+                    solution_path = current.last_move[0].name + " " + str(current.last_move[1]) +  " right; " + solution_path
+                    solution = current.last_move[0].name + " " + str(current.last_move[1]) +  " right\t\t" + str(current.last_move[2]) + "\t"+ str(current) + "\n" + solution
             else:
-                if current.last_move[1] == -1:
-                    solution_path = current.last_move[0].name + " up; " + solution_path
-                    solution = current.last_move[0].name + " up\t\t" + str(current.last_move[2]) + "\t"+ str(current) + "\n"+ solution
+                if current.last_move[1] <= -1:
+                    solution_path = current.last_move[0].name + " " + str(-1 * current.last_move[1]) +  " up; " + solution_path
+                    solution = current.last_move[0].name + " " + str(-1 * current.last_move[1]) +  " up\t\t" + str(current.last_move[2]) + "\t"+ str(current) + "\n"+ solution
                 else:
-                    solution_path = current.last_move[0].name + " down; " + solution_path
-                    solution = current.last_move[0].name + " down\t\t" + str(current.last_move[2]) + "\t" + str(current) + "\n" + solution
+                    solution_path = current.last_move[0].name + " " + str(current.last_move[1]) +  " down; " + solution_path
+                    solution = current.last_move[0].name + " " + str(current.last_move[1]) +  " down\t\t" + str(current.last_move[2]) + "\t" + str(current) + "\n" + solution
             if method == 'A_star':
                 solution_search = str(current.h + current.cost) + '\t' + str(current.cost) + '\t' + str(current.h) + '\t' + str(current) + "\n" + solution_search
             elif method == 'gbfs':
@@ -107,12 +132,12 @@ class GameEngine:
 
             current = current.parent
         move_a = 5 - ambulance.y - finishing_state.offset[index_a] - ambulance.length + 1
-        while move_a > 0:
+        if move_a > 0:
             solution_counter += 1
-            finishing_state = move_right(finishing_state, ambulance, heuristic, index_a)
-            solution = solution + ambulance.name + " right\t\t" + str(ambulance.fuel + finishing_state.fuel_offset[index_a]) + "\t" + str(current) + "\n"
-            solution_path = solution_path + ambulance.name + " right; "
-            move_a = move_a - 1
+            finishing_state.offset[index_a] += move_a
+            finishing_state = move_right(finishing_state, ambulance, heuristic, index_a, move_a)
+            solution = solution + ambulance.name +  " " + str(move_a) + " right\t\t" + str(ambulance.fuel + finishing_state.fuel_offset[index_a]) + "\t" + str(current) + "\n"
+            solution_path = solution_path + ambulance.name +  " " + str(move_a) + " right;"
         file_sol.write("Initial Board Configuration: " + str(current) + "\n\n")
         for item in current.state:
             file_sol.write(str(item).replace(", ", " ").replace("[", " ").replace("]", " ").replace("'", ""))
@@ -134,6 +159,14 @@ class GameEngine:
         file_search.close()
 
     def __str__(self):
+        
+        """
+        Returns
+        -------
+        out : str
+            Return the list of puzzles of the input_file.
+        """
+        
         dict_games, tot_fuel = self.read_file()
         out = ""
         for number, game in dict_games.items():
@@ -144,6 +177,19 @@ class GameEngine:
         return out
                 
     def extract_game(self, game):
+        
+        """
+        Parameters
+        ----------
+        game : str
+            the name of the game that we want to extract the puzzle.
+
+        Returns
+        -------
+        board : list of int32
+            puzzle of game name.
+        """
+        
         board = list()
         input_arrayed = [*self.read_file()[0][game]]
         for i in range(0, 6):
@@ -151,10 +197,42 @@ class GameEngine:
         return board
     
     def extract_fuel(self, game):
+        
+        """
+        Parameters
+        ----------
+        game : str
+            the name of the game that we want to extract the fuel.
+
+        Returns
+        -------
+        list of int32
+            list of fuel for game name.
+        """
+        
         num = int(game.split(' ')[1])
         return GameEngine.read_file(self)[-1][num - 1]
     
     def PositionCar(self, board, fuel):
+        
+        """
+        Parameters
+        ----------
+        board : list of int32
+            puzzle of a game.
+        fuel : list of int32
+            list if fuel for the puzzle.
+
+        Returns
+        -------
+        horizontal_cars : list of Car
+            list that contains cars that are horizontal.
+        vertical_cars : list of Car
+            list that contains cars that are vertical.
+        index_a : int32
+            position of the ambulance.
+        """
+        
         horizontal_cars = list()
         vertical_cars = list()
         
@@ -202,7 +280,10 @@ class State:
 
         if heuristic[0] == 1:
             self.h = h(state, heuristic[1], heuristic[2])
-
+        
+        elif heuristic[0] == 0:
+            self.h = 0
+            
         if type(parent) == State:
             self.cost = parent.cost + 1
         
@@ -214,6 +295,19 @@ class State:
             self.score = self.h
             
     def __deepcopy__(self, memodict={}):
+        
+        """
+        ----------
+        memodict : dictionnary, optional
+            The default is {}.
+
+        Returns
+        -------
+        copy_object : state
+            Overloading the deepcopy method.
+            Parameters.
+        """
+        
         copy_object = State()
         copy_object.value = self.value
         return copy_object
@@ -318,10 +412,32 @@ def move_up(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def h(state, heuristic=1, alpha=1):
+    
+    """
+    Parameters
+    ----------
+    state : State
+        state of the current puzzle.
+    heuristic : int32, optional
+        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
+    alpha : int32, optional
+        weight for heuristic 3. The default is 1.
+
+    Returns
+    -------
+    int32
+        value of the heuristic.
+    """
+    
     value = 0
     count = False
     counted = list()
     p_of_a = 0
+    if heuristic == 5:
+        if state[2][5] != 'A':
+            return 1
+        else:
+            return 0
     for i in range(0, 6):
         current = state[2][i]
         if current == 'A':
@@ -339,9 +455,11 @@ def h(state, heuristic=1, alpha=1):
         return value
 
 class Rush_Hour_Search(GameEngine):
+    
     '''
-    This class will contain all the implementations of algorithms for the resolution of the Rush Hour problem
+    This class will contain all the implementation of algorithms for the resolution of the Rush Hour problem
     '''
+    
     def __init__(self, game, input_file = 'input.txt', select_game = 'all'):
         self.game = game
         self.input_file = input_file
@@ -349,6 +467,18 @@ class Rush_Hour_Search(GameEngine):
         GameEngine(self)
     
     def ucs(self, heuristic= (0,0,0)):
+        
+        """
+        Parameters
+        ----------
+        heuristic : tuple of int32, optional
+            Don't use heurisitc for the algorithm. The default is (0,0,0).
+
+        Returns
+        -------
+        None. Call the print_result function to save result of the game.
+        """
+        
         start = datetime.now()
         fuel = self.extract_fuel(self.game)
         solution = True
@@ -434,6 +564,18 @@ class Rush_Hour_Search(GameEngine):
                     solution, horizontal_cars + vertical_cars)
     
     def gbfs(self, heuristic=(1, 4, 1)):
+        
+        """
+        Parameters
+        ----------
+        heuristic : tuple of int32, optional
+            Select the heuristic that you want to use. The default is (1,4,1).
+
+        Returns
+        -------
+        None. Call the print_result function to save result of the game.
+        """
+        
         start = datetime.now()
         fuel = self.extract_fuel(self.game)
         solution = True
@@ -519,6 +661,18 @@ class Rush_Hour_Search(GameEngine):
 
 
     def A_star(self, heuristic = (1,4,1)):
+        
+        """
+        Parameters
+        ----------
+        heuristic : tuple of int32, optional
+            Select the heuristic that you want to use. The default is (1,4,1).
+
+        Returns
+        -------
+        None. Call the print_result function to save result of the game.
+        """
+        
         start = datetime.now()
         fuel = self.extract_fuel(self.game)
         solution = True
