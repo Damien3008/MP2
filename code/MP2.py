@@ -1,3 +1,9 @@
+# =============================================================================
+# Mini Project 2: Rush Hour
+# This is the Library file, which contains all methods that will serve on 
+# solving the questions of Mini-Project 2 of Artificial Intelligent COMP 472
+# =============================================================================
+
 from heapq import *
 import itertools
 from datetime import datetime
