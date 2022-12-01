@@ -171,7 +171,8 @@ class GameEngine:
         if move_a > 0:
             solution_counter += 1
             finishing_state.offset[index_a] += move_a
-            finishing_state = move_right(finishing_state, ambulance, heuristic, index_a, move_a)
+            finishing_state = move_right(finishing_state, ambulance, heuristic, index_a, cars, move_a)
+            actually_move_state(finishing_state)
             solution = solution + ambulance.name +  " " + str(move_a) + " right\t\t" + str(ambulance.fuel + finishing_state.fuel_offset[index_a]) + "\t" + str(current) + "\n"
             solution_path = solution_path + ambulance.name +  " " + str(move_a) + " right;"
         file_sol.write("Initial Board Configuration: " + str(current) + "\n\n")
@@ -271,7 +272,7 @@ class GameEngine:
         
         horizontal_cars = list()
         vertical_cars = list()
-        
+        index = 0
         for j in range(0, 6):
             for i in range(0, 6):
                 current = board[i][j]
@@ -289,7 +290,7 @@ class GameEngine:
                     if current == 'A':
                         index_a = len(horizontal_cars)
                     if k - j > 1:
-                        horizontal_cars.append(Car(current, "H", k - j, i, j, int(fuel[current])))
+                        horizontal_cars.append(Car(current, "H", k - j, i, j, 0, int(fuel[current])))
                 if i <= 5:
                     k = i
                     while k <= 5:
@@ -300,8 +301,15 @@ class GameEngine:
                             break
                         board[k][j] = '.'
                     if k - i > 1:
-                        vertical_cars.append(Car(current, "V", k - i, i, j, int(fuel[current])))
-        
+                        vertical_cars.append(Car(current, "V", k - i, i, j, 0, int(fuel[current])))
+                        
+        for item in horizontal_cars:
+            item.i = index
+            index += 1
+        for item in vertical_cars:
+            item.i = index
+            index += 1
+                
         return horizontal_cars, vertical_cars, index_a
 
 
@@ -320,16 +328,17 @@ class State:
         
     '''
 
-    def __init__(self, state, parent, offset, fuel_offset, heuristic=(1,4,1), g = 0, last_move=("Z", 0, 0)):
+    def __init__(self, state, parent, offset, fuel_offset, cars, heuristic=(1,4,1), g = 0, last_move=("Z", 0, 0)):
         self.last_move = last_move
         self.parent = parent
         self.offset = offset
         self.state = state
         self.fuel_offset = fuel_offset
+        self.cars = cars
         self.cost = 0
 
         if heuristic[0] == 1:
-            self.h = h(state, heuristic[1], heuristic[2])
+            self.h = h(offset, self.cars, heuristic[1], heuristic[2])
         
         elif heuristic[0] == 0:
             self.h = 0
@@ -397,7 +406,7 @@ class Car():
         y : initial x location of the car (origin top left)
     '''
 
-    def __init__(self, name, orientation, length, x, y, fuel=100):
+    def __init__(self, name, orientation, length, x, y, i=0, fuel=100):
         if not isinstance(name, str):
             raise ValueError("The name needs to be a string.")
         if orientation not in ["H", "V"]:
@@ -412,6 +421,7 @@ class Car():
         self.fuel = fuel
         self.x = x
         self.y = y
+        self.i = i
 
     def __str__(self):
         return  self.name + ", " + self.orientation
@@ -419,151 +429,109 @@ class Car():
 
 # -------------- Implementation of the move methods --------------
 
-def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
-    
-    """
-    Parameters
-    ----------
-    state : State
-        state of the current puzzle.
-    car : Car
-        the car to be moved
-    heuristic : int32, optional
-        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
-    num_steps : int32, optional
-        number of steps the car should be moved
-    g : 0 or 1, optional
-        whether or not to use the current number of moves in the score
+def actually_move_state(state):
+    car = state.last_move[0]
+    num_steps = state.last_move[1]
+    if car.orientation == "H":
+        if num_steps > 0:
+            actually_move_right(state)
+        elif num_steps < 0:
+            actually_move_left(state)
+    elif car.orientation == "V":
+        if num_steps > 0:
+            actually_move_down(state)
+        elif num_steps < 0:
+            actually_move_up(state)
+    else:
+        print("Something is weird!")
 
-    Returns
-    -------
-    State
-        State created by moving
-    """
-    
-    new_offset = copy.deepcopy(current_state.offset)
-    new_state = copy.deepcopy(current_state.state)
+
+def actually_move_right(state):
+    new_fuel_offset = copy.deepcopy(state.fuel_offset)
+    car = state.last_move[0]
+    new_fuel_offset[car.i] = new_fuel_offset[car.i] - 1
+    new_state = copy.deepcopy(state.state)
+    num_steps = abs(state.last_move[1])
     for j in range(0, car.length):
-        new_state[car.x][car.y + current_state.offset[i] + j] = car.name
+        new_state[car.x][car.y + state.offset[car.i] + j] = car.name
     for j in range(0, num_steps):
-        new_state[car.x][car.y + j + current_state.offset[i] - num_steps] = "."
-    new_fuel_offset = copy.deepcopy(current_state.fuel_offset)
-    new_fuel_offset[i] = new_fuel_offset[i] - 1
-    return State(new_state, current_state, new_offset, new_fuel_offset, heuristic, g,
-                 (car, num_steps, car.fuel + new_fuel_offset[i]))
+        new_state[car.x][car.y + j + state.offset[car.i] - num_steps] = "."
+    state.state = new_state
+    state.fuel_offset = new_fuel_offset
 
 
-def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
-    
-    """
-    Parameters
-    ----------
-    state : State
-        state of the current puzzle.
-    car : Car
-        the car to be moved
-    heuristic : int32, optional
-        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
-    num_steps : int32, optional
-        number of steps the car should be moved
-    g : 0 or 1, optional
-        whether or not to use the current number of moves in the score
-
-    Returns
-    -------
-    State
-        State created by moving
-    """
-    
-    new_offset = copy.deepcopy(current_state.offset)
-    new_state = copy.deepcopy(current_state.state)
+def actually_move_left(state):
+    new_fuel_offset = copy.deepcopy(state.fuel_offset)
+    car = state.last_move[0]
+    new_fuel_offset[car.i] = new_fuel_offset[car.i] - 1
+    new_state = copy.deepcopy(state.state)
+    num_steps = abs(state.last_move[1])
     for j in range(0, car.length):
-        new_state[car.x][car.y + current_state.offset[i] + j] = car.name
+        new_state[car.x][car.y + state.offset[car.i] + j] = car.name
     for j in range(0, num_steps):
-        if not car.y + current_state.offset[i] + car.length + j >= 6:
-            new_state[car.x][car.y + current_state.offset[i] + j + car.length] = "."
-    new_fuel_offset = copy.deepcopy(current_state.fuel_offset)
-    new_fuel_offset[i] = new_fuel_offset[i] - 1
-    return State(new_state, current_state, new_offset, new_fuel_offset, heuristic, g,
-                 (car, -1 * num_steps, car.fuel + new_fuel_offset[i]))
+        if not car.y + state.offset[car.i] + car.length + j >= 6:
+            new_state[car.x][car.y + state.offset[car.i] + j + car.length] = "."
+    state.state = new_state
+    state.fuel_offset = new_fuel_offset
 
 
-def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
-    
-    """
-    Parameters
-    ----------
-    state : State
-        state of the current puzzle.
-    car : Car
-        the car to be moved
-    heuristic : int32, optional
-        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
-    num_steps : int32, optional
-        number of steps the car should be moved
-    g : 0 or 1, optional
-        whether or not to use the current number of moves in the score
-
-    Returns
-    -------
-    State
-        State created by moving
-    """
-    
-    new_offset = copy.deepcopy(current_state.offset)
-    new_state = copy.deepcopy(current_state.state)
+def actually_move_down(state):
+    new_fuel_offset = copy.deepcopy(state.fuel_offset)
+    car = state.last_move[0]
+    new_fuel_offset[car.i] = new_fuel_offset[car.i] - 1
+    new_state = copy.deepcopy(state.state)
+    num_steps = abs(state.last_move[1])
     for j in range(0, car.length):
-        new_state[car.x + current_state.offset[i] + j][car.y] = car.name
+        new_state[car.x + state.offset[car.i] + j][car.y] = car.name
     for j in range(0, num_steps):
-        new_state[car.x + j + current_state.offset[i] - num_steps][car.y] = "."
-    new_fuel_offset = copy.deepcopy(current_state.fuel_offset)
-    new_fuel_offset[i] = new_fuel_offset[i] - 1
-    return State(new_state, current_state, new_offset, new_fuel_offset, heuristic, g,
-                 (car, num_steps, car.fuel + new_fuel_offset[i]))
+        new_state[car.x + j + state.offset[car.i] - num_steps][car.y] = "."
+    state.state = new_state
+    state.fuel_offset = new_fuel_offset
 
 
-def move_up(current_state, car, heuristic, i, num_steps=1, g=0):
-    
-    """
-    Parameters
-    ----------
-    state : State
-        state of the current puzzle.
-    car : Car
-        the car to be moved
-    heuristic : int32, optional
-        heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
-    num_steps : int32, optional
-        number of steps the car should be moved
-    g : 0 or 1, optional
-        whether or not to use the current number of moves in the score
-
-    Returns
-    -------
-    State
-        State created by moving
-    """
-    
-    new_offset = copy.deepcopy(current_state.offset)
-    new_state = copy.deepcopy(current_state.state)
+def actually_move_up(state):
+    new_fuel_offset = copy.deepcopy(state.fuel_offset)
+    car = state.last_move[0]
+    new_fuel_offset[car.i] = new_fuel_offset[car.i] - 1
+    num_steps = abs(state.last_move[1])
+    new_state = copy.deepcopy(state.state)
     for j in range(0, car.length):
-        new_state[car.x + current_state.offset[i] + j][car.y] = car.name
+        new_state[car.x + state.offset[car.i] + j][car.y] = car.name
     for j in range(0, num_steps):
-        if not car.x + current_state.offset[i] + car.length + j >= 6:
-            new_state[car.x + current_state.offset[i] + car.length + j][car.y] = "."
-    new_fuel_offset = copy.deepcopy(current_state.fuel_offset)
-    new_fuel_offset[i] = new_fuel_offset[i] - 1
-    return State(new_state, current_state, new_offset, new_fuel_offset, heuristic, g,
-                 (car, -1 * num_steps, car.fuel + new_fuel_offset[i]))
+        if not car.x + state.offset[car.i] + car.length + j >= 6:
+            new_state[car.x + state.offset[car.i] + car.length + j][car.y] = "."
+    state.state = new_state
+    state.fuel_offset = new_fuel_offset
+
+def move_right(current_state, car, heuristic, i, cars, num_steps=1,g=0):
+    new_offset = copy.deepcopy(current_state.offset)
+    return State(current_state.state, current_state, new_offset, current_state.fuel_offset, cars, heuristic, g,
+                 (car, num_steps, car.fuel + current_state.fuel_offset[i] - 1))
 
 
-def h(state, heuristic=1, alpha=1):
-    
+def move_left(current_state, car, heuristic, i, cars, num_steps=1, g=0):
+    new_offset = copy.deepcopy(current_state.offset)
+    return State(current_state.state, current_state, new_offset, current_state.fuel_offset, cars, heuristic, g,
+                 (car, -1 * num_steps, car.fuel + current_state.fuel_offset[i] - 1))
+
+
+def move_down(current_state, car, heuristic, i, cars, num_steps=1, g=0):
+    new_offset = copy.deepcopy(current_state.offset)
+    return State(current_state.state, current_state, new_offset, current_state.fuel_offset, cars,heuristic, g,
+                 (car, num_steps, car.fuel + current_state.fuel_offset[i] - 1))
+
+
+def move_up(current_state, car, heuristic, i, cars, num_steps=1, g=0):
+    new_offset = copy.deepcopy(current_state.offset)
+    return State(current_state.state, current_state, new_offset, current_state.fuel_offset, cars, heuristic, g,
+                 (car, -1 * num_steps, car.fuel + current_state.fuel_offset[i] - 1))
+
+def h(offset, cars, heuristic=1, alpha=1):
     """
     Parameters
     ----------
-    state : State
-        state of the current puzzle.
+    state : board 
+        board of the current puzzle.
     heuristic : int32, optional
         heuristic that you want to use (available = [1,2,3,4,5]). The default is 1.
     alpha : int32, optional
@@ -576,29 +544,32 @@ def h(state, heuristic=1, alpha=1):
     """
     
     value = 0
-    count = False
-    counted = list()
-    p_of_a = 0
+    ambu = None
+    value = 0
+    for car in cars:
+        if car.name == 'A':
+            ambu = car
     if heuristic == 5:
-        if state[2][5] != 'A':
+        if ambu.y + offset[ambu.i] == 4:
             return 1
         else:
             return 0
-    for i in range(0, 6):
-        current = state[2][i]
-        if current == 'A':
-            count = True
-            p_of_a = i
-        elif count and current != '.' and current not in counted:
-            value += 1 
-            if not heuristic == 2:
-                counted.append(current)
-    if heuristic == 4:
-        value += (5 - p_of_a)
+    for car in cars:
+        if car == ambu:
+            continue
+        if car.orientation == "H":
+            if car.x == 2 and car.y > ambu.y:
+                if heuristic == 2:
+                    value += car.length
+                    continue
+                value += 1
+        else:
+            if car.y > ambu.y + offset[ambu.i] and car.x + offset[car.i] <= 2 <= car.x + offset[car.i] + car.length - 1:
+                value = value + 1
     if heuristic == 3:
         return value * alpha
-    else:
-        return value
+    return value
+            
 
 class Rush_Hour_Search(GameEngine):
     
@@ -637,9 +608,12 @@ class Rush_Hour_Search(GameEngine):
         horizontal_cars, vertical_cars, index_a = self.PositionCar(board, fuel)
         offset = [0] * (len(horizontal_cars) + len(vertical_cars))
         fuel_offset = [0] * (len(horizontal_cars) + len(vertical_cars))
-        current_state = State(state_board, None, offset, fuel_offset, heuristic, g=1)
+        cars = horizontal_cars + vertical_cars
+        current_state = State(state_board, None, offset, fuel_offset, cars, heuristic, g=1)
         # used to generate all children that can move
-        while h(current_state.state, heuristic=1, alpha=1) > 0:
+        while h(current_state.offset, cars, heuristic=1, alpha=1) > 0:
+            if isinstance(current_state.parent, State):
+                actually_move_state(current_state)
             # Generate all possible children
             for i in range(0, len(horizontal_cars)):
                 car = horizontal_cars[i]
@@ -653,7 +627,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y - 1 + current_state.offset[i] - j] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_left(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_left(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -664,7 +638,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y + car.length + current_state.offset[i] + j] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_right(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_right(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
@@ -682,7 +656,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x - 1 + current_state.offset[i] - j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_up(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_up(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -693,7 +667,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x + car.length + current_state.offset[i] + j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_down(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_down(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
@@ -702,7 +676,7 @@ class Rush_Hour_Search(GameEngine):
             closed_list.add(str(current_state.offset))
             if len(open_list) > 0:
                 current_state = heappop(open_list)
-            elif current_state.h > 0:
+            elif  h(current_state.offset, cars, heuristic=1, alpha=1) > 0:
                 solution = False
                 break
             
@@ -734,9 +708,12 @@ class Rush_Hour_Search(GameEngine):
         horizontal_cars, vertical_cars, index_a = self.PositionCar(board, fuel)
         offset = [0] * (len(horizontal_cars) + len(vertical_cars))
         fuel_offset = [0] * (len(horizontal_cars) + len(vertical_cars))
-        current_state = State(state_board, None, offset, fuel_offset, heuristic)
+        cars = horizontal_cars + vertical_cars
+        current_state = State(state_board, None, offset, fuel_offset, cars, heuristic)
         
         while current_state.h > 0:
+            if isinstance(current_state.parent, State):
+                actually_move_state(current_state)
             # Generate all possible children
             for i in range(0, len(horizontal_cars)):
                 car = horizontal_cars[i]
@@ -750,7 +727,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y - 1 + current_state.offset[i] - j] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_left(current_state, car, heuristic, i, num_steps=j + 1))
+                                heappush(open_list, move_left(current_state, car, heuristic, i, cars, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -761,7 +738,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y + car.length + current_state.offset[i] + j] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_right(current_state, car, heuristic, i, num_steps=j + 1))
+                                heappush(open_list, move_right(current_state, car, heuristic, i, cars, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
@@ -779,7 +756,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x - 1 + current_state.offset[i] - j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_up(current_state, car, heuristic, i, num_steps=j + 1))
+                                heappush(open_list, move_up(current_state, car, heuristic, i, cars, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -790,7 +767,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x + car.length + current_state.offset[i] + j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_down(current_state, car, heuristic, i, num_steps=j + 1))
+                                heappush(open_list, move_down(current_state, car, heuristic, i, cars, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
@@ -831,9 +808,12 @@ class Rush_Hour_Search(GameEngine):
         horizontal_cars, vertical_cars, index_a = self.PositionCar(board, fuel)
         offset = [0] * (len(horizontal_cars) + len(vertical_cars))
         fuel_offset = [0] * (len(horizontal_cars) + len(vertical_cars))
-        current_state = State(state_board, None, offset, fuel_offset, heuristic, g=0)
+        cars = horizontal_cars + vertical_cars
+        current_state = State(state_board, None, offset, fuel_offset, cars, heuristic, g=0)
         
         while current_state.h > 0:
+            if isinstance(current_state.parent, State):
+                actually_move_state(current_state)
             # Generate all possible children
             for i in range(0, len(horizontal_cars)):
                 car = horizontal_cars[i]
@@ -847,7 +827,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y - 1 + current_state.offset[i] - j] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_left(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_left(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -858,7 +838,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x][car.y + car.length + current_state.offset[i] + j] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_right(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_right(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
@@ -876,7 +856,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x - 1 + current_state.offset[i] - j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] - j - 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_up(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_up(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] + j + 1
                         else:
                             break
@@ -887,7 +867,7 @@ class Rush_Hour_Search(GameEngine):
                         if current_state.state[car.x + car.length + current_state.offset[i] + j][car.y] == '.':
                             current_state.offset[i] = current_state.offset[i] + j + 1
                             if str(current_state.offset) not in closed_list:
-                                heappush(open_list, move_down(current_state, car, heuristic, i, g=1, num_steps=j + 1))
+                                heappush(open_list, move_down(current_state, car, heuristic, i, cars, g=1, num_steps=j + 1))
                             current_state.offset[i] = current_state.offset[i] - j - 1
                         else:
                             break
