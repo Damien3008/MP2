@@ -8,23 +8,21 @@ Initial Board Configuration: .J.HHH.JBB.DKAA..DKEEEGG..ICCF..I..F
  . . I . . F 
 
 Car fuel available: A: 100 E: 100 B: 100 H: 100 C: 100 G: 100 K: 100 J: 100 I: 100 D: 100 F: 100 
-Runtime: 0.00691 seconds
+Runtime: 0.026416 seconds
 Search path length: 22 states
-Solution path length: 8 moves
-Solution path: K down; K down; K down; H left; D up; A right; A right; A right; 
+Solution path length: 6 moves
+Solution path: K 2 down; K 4 up; K 1 down; H 1 left; D 1 up; A 3 right;
 
-K down		99	.J.HHH.JBB.D.AA..D.EEEGGK.ICCFK.I..F
-K down		98	KJ.HHHKJBB.D.AA..D.EEEGG..ICCF..I..F
-K down		97	.J.HHHKJBB.DKAA..D.EEEGG..ICCF..I..F
-H left		99	.JHHH.KJBB.DKAA..D.EEEGG..ICCF..I..F
-D up		99	.JHHHDKJBB.DKAA....EEEGG..ICCF..I..F
-A right		99	.J.HHH.JBB.DKAA..DKEEEGG..ICCF..I..F
-A right		98	.J.HHH.JBB.DKAA..DKEEEGG..ICCF..I..F
-A right		97	.J.HHH.JBB.DKAA..DKEEEGG..ICCF..I..F
+K 2 down		99	.J.HHH.JBB.D.AA..D.EEEGGK.ICCFK.I..F
+K 4 up		98	KJ.HHHKJBB.D.AA..D.EEEGG..ICCF..I..F
+K 1 down		97	.J.HHHKJBB.DKAA..D.EEEGG..ICCF..I..F
+H 1 left		99	.JHHH.KJBB.DKAA..D.EEEGG..ICCF..I..F
+D 1 up		99	.JHHHDKJBB.DKAA....EEEGG..ICCF..I..F
+A 3 right		99	.J.HHH.JBB.DKAA..DKEEEGG..ICCF..I..F
 
  . J H H H D 
  K J B B . D 
- . A A . . . 
+ K . . . A A 
  . E E E G G 
  . . I C C F 
  . . I . . F 

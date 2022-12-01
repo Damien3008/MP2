@@ -1,0 +1,23 @@
+Initial Board Configuration: .HHHDCFFL.DCBBLAA.JJEEEK.GIIIK.GMMM.
+
+ . H H H D C 
+ F F L . D C 
+ B B L A A . 
+ J J E E E K 
+ . G I I I K 
+ . G M M M . 
+
+Car fuel available: F: 100 B: 100 J: 100 H: 100 E: 100 I: 100 M: 100 A: 100 G: 100 L: 100 D: 100 C: 100 K: 100 
+Runtime: 0.003329 seconds
+Search path length: 0 states
+Solution path length: 1 moves
+Solution path: A 1 right;
+
+A 1 right		99	.HHHDCFFL.DCBBLAA.JJEEEK.GIIIK.GMMM.
+
+ . H H H D C 
+ F F L . D C 
+ B B L . A A 
+ J J E E E K 
+ . G I I I K 
+ . G M M M . 

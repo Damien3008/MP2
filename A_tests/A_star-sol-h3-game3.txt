@@ -1,0 +1,35 @@
+Initial Board Configuration: EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
+
+ E E E . I . 
+ . G G F I . 
+ . A A F I . 
+ B . C F . . 
+ B . C J J D 
+ B H H H . D 
+
+Car fuel available: E: 100 G: 100 A: 100 H: 100 J: 100 B: 100 C: 100 F: 100 I: 100 D: 100 
+Runtime: 24.299316 seconds
+Search path length: 1028 states
+Solution path length: 13 moves
+Solution path: I 1 down; G 1 left; E 3 right; A 1 left; C 3 up; J 1 left; I 2 down; J 1 left; A 1 right; B 1 up; H 1 left; F 2 down; A 3 right;
+
+I 1 down		99	EEE....GGFI..AAFI.B.CFI.B.CJJDBHHH.D
+G 1 left		99	EEE...GG.FI..AAFI.B.CFI.B.CJJDBHHH.D
+E 3 right		99	...EEEGG.FI..AAFI.B.CFI.B.CJJDBHHH.D
+A 1 left		99	...EEEGG.FI.AA.FI.B.CFI.B.CJJDBHHH.D
+C 3 up		99	..CEEEGGCFI.AA.FI.B..FI.B..JJDBHHH.D
+J 1 left		99	..CEEEGGCFI.AA.FI.B..FI.B.JJ.DBHHH.D
+I 2 down		98	..CEEEGGCF..AA.F..B..FI.B.JJIDBHHHID
+J 1 left		98	..CEEEGGCF..AA.F..B..FI.BJJ.IDBHHHID
+A 1 right		98	..CEEEGGCF...AAF..B..FI.BJJ.IDBHHHID
+B 1 up		99	..CEEEGGCF..BAAF..B..FI.BJJ.ID.HHHID
+H 1 left		99	..CEEEGGCF..BAAF..B..FI.BJJ.IDHHH.ID
+F 2 down		99	..CEEEGGC...BAA...B..FI.BJJFIDHHHFID
+A 3 right		97	EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
+
+ . . C E E E 
+ G G C . . . 
+ B . . . A A 
+ B . . F I . 
+ B J J F I D 
+ H H H F I D 

@@ -1,0 +1,27 @@
+Initial Board Configuration: MII..EM.HHHEAA.CLGFKKCLGFJBCDGFJB.D.
+
+ M I I . . E 
+ M . H H H E 
+ A A . C L G 
+ F K K C L G 
+ F J B C D G 
+ F J B . D . 
+
+Car fuel available: A: 100 I: 100 K: 100 H: 100 M: 100 F: 100 J: 100 B: 100 C: 100 L: 100 D: 100 E: 100 G: 100 
+Runtime: 0.34757 seconds
+Search path length: 162 states
+Solution path length: 5 moves
+Solution path: G 1 down; C 1 down; H 1 left; L 2 up; A 4 right; 
+
+G 1 down		99	MII..EM.HHHEAA.CL.FKKCLGFJBCDGFJB.DG
+C 1 down		99	MII..EM.HHHEAA..L.FKKCLGFJBCDGFJBCDG
+H 1 left		99	MII..EMHHH.EAA..L.FKKCLGFJBCDGFJBCDG
+L 2 up		99	MII.LEMHHHLEAA....FKKC.GFJBCDGFJBCDG
+A 4 right		99	MII.LEMHHHLE....AAFKKC.GFJBCDGFJBCDG
+
+ M I I . L E 
+ M H H H L E 
+ . . . . A A 
+ F K K C . G 
+ F J B C D G 
+ F J B C D G 

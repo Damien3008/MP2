@@ -8,37 +8,35 @@ Initial Board Configuration: EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
  B H H H . D 
 
 Car fuel available: E: 100 G: 100 A: 100 H: 100 J: 100 B: 100 C: 100 F: 100 I: 100 D: 100 
-Runtime: 0.714331 seconds
+Runtime: 2.658965 seconds
 Search path length: 1388 states
-Solution path length: 22 moves
-Solution path: A left; D down; D down; E right; D down; I down; E right; G left; D down; D down; E right; C down; J left; I down; A right; B up; H left; J left; F down; A right; A right; A right; 
+Solution path length: 20 moves
+Solution path: A 1 left; D 4 up; D 3 down; E 1 right; D 1 down; I 1 down; E 1 right; G 1 left; D 4 up; D 3 down; E 1 right; C 3 up; J 1 left; I 2 down; A 1 right; B 1 up; H 1 left; J 1 left; F 2 down; A 3 right;
 
-A left		99	EEE.I..GGFI.AA.FI.B.CF..B.CJJDBHHH.D
-D down		99	EEE.ID.GGFIDAA.FI.B.CF..B.CJJ.BHHH..
-D down		98	EEE.I..GGFI.AA.FI.B.CF.DB.CJJDBHHH..
-E right		99	.EEEI..GGFI.AA.FI.B.CF.DB.CJJDBHHH..
-D down		97	.EEEI..GGFI.AA.FI.B.CF..B.CJJDBHHH.D
-I down		99	.EEE...GGFI.AA.FI.B.CFI.B.CJJDBHHH.D
-E right		98	..EEE..GGFI.AA.FI.B.CFI.B.CJJDBHHH.D
-G left		99	..EEE.GG.FI.AA.FI.B.CFI.B.CJJDBHHH.D
-D down		96	..EEEDGG.FIDAA.FI.B.CFI.B.CJJ.BHHH..
-D down		95	..EEE.GG.FI.AA.FI.B.CFIDB.CJJDBHHH..
-E right		97	...EEEGG.FI.AA.FI.B.CFIDB.CJJDBHHH..
-C down		99	..CEEEGGCFI.AA.FI.B..FIDB..JJDBHHH..
-J left		99	..CEEEGGCFI.AA.FI.B..FIDB.JJ.DBHHH..
-I down		98	..CEEEGGCF..AA.F..B..FIDB.JJIDBHHHI.
-A right		98	..CEEEGGCF...AAF..B..FIDB.JJIDBHHHI.
-B up		99	..CEEEGGCF..BAAF..B..FIDB.JJID.HHHI.
-H left		99	..CEEEGGCF..BAAF..B..FIDB.JJIDHHH.I.
-J left		98	..CEEEGGCF..BAAF..B..FIDBJJ.IDHHH.I.
-F down		99	..CEEEGGC...BAA...B..FIDBJJFIDHHHFI.
-A right		97	EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
-A right		96	EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
-A right		95	EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
+A 1 left		99	EEE.I..GGFI.AA.FI.B.CF..B.CJJDBHHH.D
+D 4 up		99	EEE.ID.GGFIDAA.FI.B.CF..B.CJJ.BHHH..
+D 3 down		98	EEE.I..GGFI.AA.FI.B.CF.DB.CJJDBHHH..
+E 1 right		99	.EEEI..GGFI.AA.FI.B.CF.DB.CJJDBHHH..
+D 1 down		97	.EEEI..GGFI.AA.FI.B.CF..B.CJJDBHHH.D
+I 1 down		99	.EEE...GGFI.AA.FI.B.CFI.B.CJJDBHHH.D
+E 1 right		98	..EEE..GGFI.AA.FI.B.CFI.B.CJJDBHHH.D
+G 1 left		99	..EEE.GG.FI.AA.FI.B.CFI.B.CJJDBHHH.D
+D 4 up		96	..EEEDGG.FIDAA.FI.B.CFI.B.CJJ.BHHH..
+D 3 down		95	..EEE.GG.FI.AA.FI.B.CFIDB.CJJDBHHH..
+E 1 right		97	...EEEGG.FI.AA.FI.B.CFIDB.CJJDBHHH..
+C 3 up		99	..CEEEGGCFI.AA.FI.B..FIDB..JJDBHHH..
+J 1 left		99	..CEEEGGCFI.AA.FI.B..FIDB.JJ.DBHHH..
+I 2 down		98	..CEEEGGCF..AA.F..B..FIDB.JJIDBHHHI.
+A 1 right		98	..CEEEGGCF...AAF..B..FIDB.JJIDBHHHI.
+B 1 up		99	..CEEEGGCF..BAAF..B..FIDB.JJID.HHHI.
+H 1 left		99	..CEEEGGCF..BAAF..B..FIDB.JJIDHHH.I.
+J 1 left		98	..CEEEGGCF..BAAF..B..FIDBJJ.IDHHH.I.
+F 2 down		99	..CEEEGGC...BAA...B..FIDBJJFIDHHHFI.
+A 3 right		97	EEE.I..GGFI..AAFI.B.CF..B.CJJDBHHH.D
 
  . . C E E E 
  G G C . . . 
- . A A . . . 
+ B . . . A A 
  B . . F I D 
  B J J F I D 
  H H H F I . 

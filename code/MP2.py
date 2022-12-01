@@ -420,7 +420,8 @@ class Car():
 # -------------- Implementation of the move methods --------------
 
 def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
-"""
+    
+    """
     Parameters
     ----------
     state : State
@@ -439,6 +440,7 @@ def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
     State
         State created by moving
     """
+    
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -452,7 +454,8 @@ def move_right(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
-"""
+    
+    """
     Parameters
     ----------
     state : State
@@ -471,6 +474,7 @@ def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
     State
         State created by moving
     """
+    
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -485,7 +489,8 @@ def move_left(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
-"""
+    
+    """
     Parameters
     ----------
     state : State
@@ -504,6 +509,7 @@ def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
     State
         State created by moving
     """
+    
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
@@ -517,7 +523,8 @@ def move_down(current_state, car, heuristic, i, num_steps=1, g=0):
 
 
 def move_up(current_state, car, heuristic, i, num_steps=1, g=0):
-"""
+    
+    """
     Parameters
     ----------
     state : State
@@ -536,6 +543,7 @@ def move_up(current_state, car, heuristic, i, num_steps=1, g=0):
     State
         State created by moving
     """
+    
     new_offset = copy.deepcopy(current_state.offset)
     new_state = copy.deepcopy(current_state.state)
     for j in range(0, car.length):
