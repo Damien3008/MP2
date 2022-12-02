@@ -1,4 +1,4 @@
 ,length of the search path (for gbfs and A* heuristic = 1),length of the solution (for gbfs and A* heuristic = 1),Execution time (seconds) (for gbfs and A* heuristic = 1),length of the search path (for gbfs and A* heuristic = 2),length of the solution (for gbfs and A* heuristic = 2),Execution time (seconds) (for gbfs and A* heuristic = 2),length of the search path (for gbfs and A* heuristic = 3),length of the solution (for gbfs and A* heuristic = 3),Execution time (seconds) (for gbfs and A* heuristic = 3),length of the search path (for gbfs and A* heuristic = 4),length of the solution (for gbfs and A* heuristic = 4),Execution time (seconds) (for gbfs and A* heuristic = 4),length of the search path (for gbfs and A* heuristic = 5),length of the solution (for gbfs and A* heuristic = 5),Execution time (seconds) (for gbfs and A* heuristic = 5)
-ucs,240.9667,4.1333,4.3149,,,,,,,,,,,,
-gbfs,108.1,7.2,0.2115,108.1,7.2,0.2103,108.1,7.2,0.2126,164.1667,7.9667,0.3962,518.2333,36.5333,1.2997
-A*,301.8,3.8667,28.3544,301.8,3.8667,28.7363,145.6333,4.1,3.1656,242.9333,4.1333,9.2654,592.7667,3.8667,43.7369
+ucs,569.4375,3.8438,13.6029,,,,,,,,,,,,
+gbfs,101.5938,7.0,0.1984,101.5938,7.0,0.1973,101.5938,7.0,0.1995,154.1562,7.7188,0.3716,485.8438,34.3125,1.2186
+A*,283.6562,3.8438,26.5824,283.6562,3.8438,26.9405,136.9375,4.0938,2.968,228.4688,4.0938,8.6866,555.7188,3.8438,41.0034

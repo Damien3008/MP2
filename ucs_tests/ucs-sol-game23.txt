@@ -8,17 +8,17 @@ Initial Board Configuration: CIIGG.CKK..ECDAA.EFDHHJEFDLLJ.F.BBB.
  F . B B B . 
 
 Car fuel available: I: 100 K: 100 A: 100 H: 100 L: 100 B: 100 G: 100 C: 100 F: 100 D: 100 J: 100 E: 100 
-Runtime: 0.002404 seconds
-Search path length: 2 states
+Runtime: 0.002024 seconds
+Search path length: 4 states
 Solution path length: 2 moves
 Solution path: E 2 down; A 2 right;
 
-E 2 down		99	CIIGG.CKK...CDAA..FDHHJEFDLLJEF.BBBE
+E 2 down		99	CIIGG.CKK..ECDAA.EFDHHJEFDLLJ.F.BBB.
 A 2 right		99	CIIGG.CKK..ECDAA.EFDHHJEFDLLJ.F.BBB.
 
  C I I G G . 
- C K K . . . 
+ C K K . . E 
  C D . . A A 
  F D H H J E 
- F D L L J E 
- F . B B B E 
+ F D L L J . 
+ F . B B B . 

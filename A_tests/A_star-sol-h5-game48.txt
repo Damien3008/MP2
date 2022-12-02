@@ -1,2 +1,23 @@
-No solution
-A: 100 C: 100 B: 100 M: 100 K: 100 D: 100 L: 100 H: 100 J: 100 N: 100 F: 100 G: 100 E: 100 I: 100 
+Initial Board Configuration: E..CCCEI.....I.AADF.BB.DF...H.FGGGH.
+
+ E . . C C C 
+ E I . . . . 
+ . I . A A D 
+ F . B B . D 
+ F . . . H . 
+ F G G G H . 
+
+Car fuel available: G: 100 B: 100 C: 100 A: 100 E: 100 F: 100 I: 100 H: 100 D: 100 
+Runtime: 0.000922 seconds
+Search path length: 0 states
+Solution path length: 1 moves
+Solution path: A 1 right;
+
+A 1 right		99	E..CCCEI.....I.AADF.BB.DF...H.FGGGH.
+
+ E . . C C C 
+ E I . . . . 
+ . I . . A A 
+ F . B B . D 
+ F . . . H . 
+ F G G G H . 

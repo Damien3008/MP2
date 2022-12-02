@@ -1,0 +1,67 @@
+Initial Board Configuration: ..CC.L..EE.LHAAJ.MHFFJ.M..IKGG..IK..
+
+ . . C C . L 
+ . . E E . L 
+ H A A J . M 
+ H F F J . M 
+ . . I K G G 
+ . . I K . . 
+
+Car fuel available: A: 100 F: 100 C: 100 E: 100 G: 100 H: 100 I: 100 J: 4 K: 100 L: 100 M: 1 
+Runtime: 0.21637 seconds
+Search path length: 618 states
+Solution path length: 45 moves
+Solution path: C 1 left; H 2 down; H 4 up; H 3 down; E 1 right; H 1 down; H 4 up; H 2 down; H 1 up; E 2 left; J 2 up; A 2 right; K 1 up; H 3 down; K 1 down; F 2 right; I 2 up; I 1 down; H 2 up; E 1 left; H 1 down; A 2 left; A 1 left; H 1 down; I 1 down; F 2 left; K 2 up; H 1 up; G 1 left; M 2 down; C 1 left; E 1 right; A 1 right; H 1 down; C 1 right; F 1 left; C 1 left; I 1 up; A 1 left; E 1 left; I 3 up; A 1 right; G 2 left; K 1 down; A 3 right;
+
+C 1 left		99	.CC..L..EE.LHAAJ.MHFFJ.M..IKGG..IK..
+H 2 down		99	.CC..L..EE.L.AAJ.M.FFJ.MH.IKGGH.IK..
+H 4 up		98	HCC..LH.EE.L.AAJ.M.FFJ.M..IKGG..IK..
+H 3 down		97	.CC..L..EE.L.AAJ.MHFFJ.MH.IKGG..IK..
+E 1 right		99	.CC..L...EEL.AAJ.MHFFJ.MH.IKGG..IK..
+H 1 down		96	.CC..L...EEL.AAJ.M.FFJ.MH.IKGGH.IK..
+H 4 up		95	HCC..LH..EEL.AAJ.M.FFJ.M..IKGG..IK..
+H 2 down		94	.CC..L...EELHAAJ.MHFFJ.M..IKGG..IK..
+H 1 up		93	.CC..LH..EELHAAJ.M.FFJ.M..IKGG..IK..
+E 2 left		98	.CC..LHEE..LHAAJ.M.FFJ.M..IKGG..IK..
+J 2 up		3	.CCJ.LHEEJ.LHAA..M.FF..M..IKGG..IK..
+A 2 right		99	.CCJ.LHEEJ.LH..AAM.FF..M..IKGG..IK..
+K 1 up		99	.CCJ.LHEEJ.LH..AAM.FFK.M..IKGG..I...
+H 3 down		92	.CCJ.L.EEJ.L...AAM.FFK.MH.IKGGH.I...
+K 1 down		98	.CCJ.L.EEJ.L...AAM.FF..MH.IKGGH.IK..
+F 2 right		99	.CCJ.L.EEJ.L...AAM...FFMH.IKGGH.IK..
+I 2 up		99	.CCJ.L.EEJ.L..IAAM..IFFMH..KGGH..K..
+I 1 down		98	.CCJ.L.EEJ.L...AAM..IFFMH.IKGGH..K..
+H 2 up		91	.CCJ.L.EEJ.LH..AAMH.IFFM..IKGG...K..
+E 1 left		97	.CCJ.LEE.J.LH..AAMH.IFFM..IKGG...K..
+H 1 down		90	.CCJ.LEE.J.L...AAMH.IFFMH.IKGG...K..
+A 2 left		98	.CCJ.LEE.J.L.AA..MH.IFFMH.IKGG...K..
+A 1 left		97	.CCJ.LEE.J.LAA...MH.IFFMH.IKGG...K..
+H 1 down		89	.CCJ.LEE.J.LAA...M..IFFMH.IKGGH..K..
+I 1 down		97	.CCJ.LEE.J.LAA...M...FFMH.IKGGH.IK..
+F 2 left		98	.CCJ.LEE.J.LAA...M.FF..MH.IKGGH.IK..
+K 2 up		97	.CCJ.LEE.J.LAA.K.M.FFK.MH.I.GGH.I...
+H 1 up		88	.CCJ.LEE.J.LAA.K.MHFFK.MH.I.GG..I...
+G 1 left		99	.CCJ.LEE.J.LAA.K.MHFFK.MH.IGG...I...
+M 2 down		0	.CCJ.LEE.J.LAA.K..HFFK..H.IGGM..I..M
+C 1 left		98	CC.J.LEE.J.LAA.K..HFFK..H.IGGM..I..M
+E 1 right		96	CC.J.L.EEJ.LAA.K..HFFK..H.IGGM..I..M
+A 1 right		96	CC.J.L.EEJ.L.AAK..HFFK..H.IGGM..I..M
+H 1 down		87	CC.J.L.EEJ.L.AAK...FFK..H.IGGMH.I..M
+C 1 right		97	.CCJ.L.EEJ.L.AAK...FFK..H.IGGMH.I..M
+F 1 left		97	.CCJ.L.EEJ.L.AAK..FF.K..H.IGGMH.I..M
+C 1 left		96	CC.J.L.EEJ.L.AAK..FF.K..H.IGGMH.I..M
+I 1 up		96	CC.J.L.EEJ.L.AAK..FFIK..H.IGGMH....M
+A 1 left		95	CC.J.L.EEJ.LAA.K..FFIK..H.IGGMH....M
+E 1 left		95	CC.J.LEE.J.LAA.K..FFIK..H.IGGMH....M
+I 3 up		95	CCIJ.LEEIJ.LAA.K..FF.K..H..GGMH....M
+A 1 right		94	CCIJ.LEEIJ.L.AAK..FF.K..H..GGMH....M
+G 2 left		98	CCIJ.LEEIJ.L.AAK..FF.K..HGG..MH....M
+K 1 down		96	CCIJ.LEEIJ.L.AAK..FF.K..HGG..MH....M
+A 3 right		93	..CC.L..EE.LHAAJ.MHFFJ.M..IKGG..IK..
+
+ C C I J . L 
+ E E I J . L 
+ . . . . A A 
+ F F . K . . 
+ H G G . . M 
+ H . . . . M 

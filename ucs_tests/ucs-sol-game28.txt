@@ -8,7 +8,7 @@ Initial Board Configuration: ..DDHH.F.EEE.F.AA.BFGGG.B...CCIII...
  I I I . . . 
 
 Car fuel available: I: 100 D: 100 G: 100 E: 100 A: 100 H: 100 C: 100 B: 100 F: 100 
-Runtime: 0.001697 seconds
+Runtime: 0.00145 seconds
 Search path length: 0 states
 Solution path length: 1 moves
 Solution path: A 1 right;

@@ -1,0 +1,23 @@
+#
+# Demo 32
+#
+
+# demo 32.1
+GBBIJ.G.HIJ.AAHI....HCC........EE... 
+
+# demo 32.2
+HBBL..HIJLCCHIJAAM..K..MDDK...FFGG.. K0 B4
+
+# demo 32.3
+..CC.L..EE.LHAAJ.MHFFJ.M..IKGG..IK.. M1 J4
+
+# demo 32.4
+........JDDDAAJK..HEEK.LHIFF.LHIGGG. 
+
+# demo 32.5
+BBB.LM....LMAAJ..MI.JCCCIDDKEE.GGKHH 
+
+# demo 32.6
+...I....HICCAAHJK.DD.JKMGEEELMG.FFL. 
+
+

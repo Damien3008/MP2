@@ -1,0 +1,56 @@
+Initial Board Configuration: ...I....HICCAAHJK.DD.JKMGEEELMG.FFL.
+
+ . . . I . . 
+ . . H I C C 
+ A A H J K . 
+ D D . J K M 
+ G E E E L M 
+ G . F F L . 
+
+Car fuel available: A: 100 D: 100 E: 100 F: 100 C: 100 G: 100 H: 100 I: 100 J: 100 K: 100 L: 100 M: 100 
+Runtime: 79.601887 seconds
+Search path length: 2548 states
+Solution path length: 34 moves
+Solution path: H 1 up; D 1 right; A 1 right; G 4 up; A 1 left; E 1 left; F 2 left; D 1 left; J 2 down; I 2 down; H 2 down; C 3 left; I 2 up; M 3 up; J 2 up; K 2 up; L 2 up; E 3 right; F 4 right; H 2 down; D 1 right; A 1 right; G 4 down; D 1 left; C 1 left; A 1 left; H 4 up; A 1 right; D 1 right; G 2 up; E 3 left; J 1 down; L 1 down; A 3 right;
+
+H 1 up		99	..HI....HICCAA.JK.DD.JKMGEEELMG.FFL.
+D 1 right		99	..HI....HICCAA.JK..DDJKMGEEELMG.FFL.
+A 1 right		99	..HI....HICC.AAJK..DDJKMGEEELMG.FFL.
+G 4 up		99	G.HI..G.HICC.AAJK..DDJKM.EEELM..FFL.
+A 1 left		98	G.HI..G.HICCAA.JK..DDJKM.EEELM..FFL.
+E 1 left		99	G.HI..G.HICCAA.JK..DDJKMEEE.LM..FFL.
+F 2 left		99	G.HI..G.HICCAA.JK..DDJKMEEE.LMFF..L.
+D 1 left		98	G.HI..G.HICCAA.JK.DD.JKMEEE.LMFF..L.
+J 2 down		99	G.HI..G.HICCAA..K.DD..KMEEEJLMFF.JL.
+I 2 down		99	G.H...G.H.CCAA.IK.DD.IKMEEEJLMFF.JL.
+H 2 down		98	G.....G...CCAAHIK.DDHIKMEEEJLMFF.JL.
+C 3 left		99	G.....GCC...AAHIK.DDHIKMEEEJLMFF.JL.
+I 2 up		98	G..I..GCCI..AAH.K.DDH.KMEEEJLMFF.JL.
+M 3 up		99	G..I.MGCCI.MAAH.K.DDH.K.EEEJL.FF.JL.
+J 2 up		98	G..I.MGCCI.MAAHJK.DDHJK.EEE.L.FF..L.
+K 2 up		99	G..IKMGCCIKMAAHJ..DDHJ..EEE.L.FF..L.
+L 2 up		99	G..IKMGCCIKMAAHJL.DDHJL.EEE...FF....
+E 3 right		98	G..IKMGCCIKMAAHJL.DDHJL....EEEFF....
+F 4 right		98	G..IKMGCCIKMAAHJL.DDHJL....EEE....FF
+H 2 down		97	G..IKMGCCIKMAA.JL.DD.JL...HEEE..H.FF
+D 1 right		97	G..IKMGCCIKMAA.JL..DDJL...HEEE..H.FF
+A 1 right		97	G..IKMGCCIKM.AAJL..DDJL...HEEE..H.FF
+G 4 down		98	...IKM.CCIKM.AAJL..DDJL.G.HEEEG.H.FF
+D 1 left		96	...IKM.CCIKM.AAJL.DD.JL.G.HEEEG.H.FF
+C 1 left		98	...IKMCC.IKM.AAJL.DD.JL.G.HEEEG.H.FF
+A 1 left		96	...IKMCC.IKMAA.JL.DD.JL.G.HEEEG.H.FF
+H 4 up		96	..HIKMCCHIKMAA.JL.DD.JL.G..EEEG...FF
+A 1 right		95	..HIKMCCHIKM.AAJL.DD.JL.G..EEEG...FF
+D 1 right		95	..HIKMCCHIKM.AAJL..DDJL.G..EEEG...FF
+G 2 up		97	..HIKMCCHIKMGAAJL.GDDJL....EEE....FF
+E 3 left		97	..HIKMCCHIKMGAAJL.GDDJL.EEE.......FF
+J 1 down		97	..HIKMCCHIKMGAA.L.GDDJL.EEEJ......FF
+L 1 down		98	..HIKMCCHIKMGAA.L.GDDJL.EEEJ......FF
+A 3 right		94	...I....HICCAAHJK.DD.JKMGEEELMG.FFL.
+
+ . . H I K M 
+ C C H I K M 
+ G . . . A A 
+ G D D J L . 
+ E E E J . . 
+ . . . . F F 

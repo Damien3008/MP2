@@ -1,2 +1,27 @@
-No solution
-J: 100 M: 100 A: 100 H: 100 E: 100 G: 100 C: 100 B: 100 L: 100 D: 100 F: 100 K: 100 I: 100 N: 100 
+Initial Board Configuration: II.......GG..AAHFBEE.HFBDD.CCC......
+
+ I I . . . . 
+ . . . G G . 
+ . A A H F B 
+ E E . H F B 
+ D D . C C C 
+ . . . . . . 
+
+Car fuel available: I: 100 E: 100 D: 100 A: 100 G: 100 C: 100 H: 100 F: 100 B: 100 
+Runtime: 0.406625 seconds
+Search path length: 1008 states
+Solution path length: 5 moves
+Solution path: G 2 left; F 2 up; B 2 up; H 2 up; A 3 right;
+
+G 2 left		99	II.....GG....AAHFBEE.HFBDD.CCC......
+F 2 up		99	II..F..GG.F..AAH.BEE.H.BDD.CCC......
+B 2 up		99	II..FB.GG.FB.AAH..EE.H..DD.CCC......
+H 2 up		99	II..FB.GG.FB.AAH..EE.H..DD.CCC......
+A 3 right		99	II.......GG..AAHFBEE.HFBDD.CCC......
+
+ I I . . F B 
+ . G G . F B 
+ . . . . A A 
+ E E . H . . 
+ D D . C C C 
+ . . . . . . 

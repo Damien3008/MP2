@@ -1,0 +1,24 @@
+Initial Board Configuration: HBBL..HIJLCCHIJAAM..K..MDDK...FFGG..
+
+ H B B L . . 
+ H I J L C C 
+ H I J A A M 
+ . . K . . M 
+ D D K . . . 
+ F F G G . . 
+
+Car fuel available: D: 100 F: 100 B: 4 G: 100 A: 100 C: 100 H: 100 I: 100 J: 100 K: 0 L: 100 M: 100 
+Runtime: 0.000675 seconds
+Search path length: 1 states
+Solution path length: 2 moves
+Solution path: M 1 down; A 1 right;
+
+M 1 down		99	HBBL..HIJLCCHIJAAM..K..MDDK...FFGG..
+A 1 right		99	HBBL..HIJLCCHIJAAM..K..MDDK...FFGG..
+
+ H B B L . . 
+ H I J L C C 
+ H I J . A A 
+ . . K . . M 
+ D D K . . . 
+ F F G G . . 

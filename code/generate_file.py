@@ -41,7 +41,7 @@ def generateSample():
             occupied += length
     return board
 
-f = open("games_file.txt", 'w')
+f = open("games1_file.txt", 'w')
 for i in tqdm(range(0, 50)):
     board = generateSample()
     f.write(str(board).replace(", ", "").replace("[", "").replace("]", "").replace("'", "") + '\n')
